@@ -148,4 +148,22 @@ public class SandwichTests {
         });
         assertTrue(exception.getMessage().contains("cannot be null"));
     }
+
+    @Test
+    public void testPriceCalculationWithMultipleMeats() {
+        Sandwich s = new Sandwich("white", false, 12);
+        s.addTopping(new Topping("steak", "meat", false));
+        s.addTopping(new Topping("bacon", "meat", false));
+        assertEquals(8.50 + 3.00 + 3.00, s.getPrice());
+    }
+
+    @Test
+    public void testReceiptContainsAllToppings() {
+        Sandwich s = new Sandwich("white", false, 8);
+        s.addTopping(new Topping("lettuce", "regular", false));
+        s.addTopping(new Topping("cheddar", "cheese", true));
+        String receipt = s.createReceipt();
+        assertTrue(receipt.contains("lettuce"));
+        assertTrue(receipt.contains("cheddar (extra)"));
+    }
 }
