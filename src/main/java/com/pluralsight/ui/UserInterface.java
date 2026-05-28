@@ -38,15 +38,12 @@ public class UserInterface {
             try {
                 int choice = Integer.parseInt(scanner.nextLine().trim());
                 switch (choice) {
-                    case 1:
-                        createOrder();
-                        break;
-                    case 0:
-                        System.out.println("Goodbye! \uD83E\uDD6A");
+                    case 1 -> createOrder();
+                    case 0 -> {
+                        System.out.println("Goodbye! 🥪");
                         running = false;
-                        break;
-                    default:
-                        System.out.println("Invalid option, try again.");
+                    }
+                    default -> System.out.println("Invalid option, try again.");
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Please enter a number.");
@@ -76,8 +73,55 @@ public class UserInterface {
 
     }
 
-    //
-    public void createOrder() {
-        //
+    //create a reusable yes or no validator eg if they want extra/toast
+    private boolean yesOrNo(String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine().trim().toLowerCase();
+            if (input.equals("yes") || input.equals("y")) return true;
+            if (input.equals("no") || input.equals("n")) return false;
+            System.out.println("Please enter yes or no.");
+        }
     }
+
+    public void createOrder() {
+        currentOrder = new Order();
+        boolean addingItems = true;
+
+        while (addingItems) {
+            System.out.println("\n=================================");
+            System.out.println("         YOUR ORDER");
+            System.out.println("=================================");
+            System.out.println("1. Add Sandwich");
+            System.out.println("2. Add Drink");
+            System.out.println("3. Add Chips");
+            System.out.println("4. Checkout");
+            System.out.println("0. Cancel Order");
+            System.out.println("=================================");
+            System.out.print("Enter your choice: ");
+
+            try {
+                int choice = Integer.parseInt(scanner.nextLine().trim());
+                switch (choice) {
+                    case 1 -> addSandwich();
+                    case 2 -> addDrink();
+                    case 3 -> addChips();
+                    case 4 -> {
+                        checkout();
+                        addingItems = false;
+                    }
+                    case 0 -> {
+                        System.out.println("Order cancelled.");
+                        currentOrder = null;
+                        addingItems = false;
+                    }
+                    default -> System.out.println("Invalid option, try again.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a number.");
+            }
+        }
+    }
+
+
 }
