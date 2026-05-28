@@ -40,4 +40,20 @@ public class ChipsTest {
         c.setType("Ranch");
         assertEquals("Ranch", c.getType());
     }
+
+    @Test
+    public void testNullChipTypeThrowsException() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            new Chip(null);
+        });
+        assertTrue(exception.getMessage().contains("cannot be null or empty"));
+    }
+
+    @Test
+    public void testEmptyChipTypeThrowsException() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            new Chip("");
+        });
+        assertTrue(exception.getMessage().contains("cannot be null or empty"));
+    }
 }
