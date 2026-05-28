@@ -9,12 +9,16 @@ public class Sandwich implements OrderItem {
     private ArrayList<Topping> toppings;
     private double price;
 
-    // remember no derived properties as parameters
     public Sandwich(String breadType, boolean isToasted, int size) {
+        if (breadType == null || breadType.trim().isEmpty()) {
+            throw new IllegalArgumentException("Bread type cannot be null or empty");
+        }
+        if (size != 4 && size != 8 && size != 12) {
+            throw new IllegalArgumentException("Sandwich size must be 4, 8, or 12 inches");
+        }
         this.breadType = breadType;
         this.size = size;
         this.isToasted = isToasted;
-        //multiple toppings = store in an array
         this.toppings = new ArrayList<>();
         this.price = basePrice(size);
     }
@@ -51,7 +55,6 @@ public class Sandwich implements OrderItem {
         return price;
     }
 
-    //assign a base price per size
     private double basePrice(int size) {
         return switch (size) {
             case 4 -> 5.50;
@@ -61,8 +64,10 @@ public class Sandwich implements OrderItem {
         };
     }
 
-    //factor in topping prices
     public void addTopping(Topping topping) {
+        if (topping == null) {
+            throw new IllegalArgumentException("Topping cannot be null");
+        }
         toppings.add(topping);
         switch (topping.getType()) {
             case "meat":
@@ -79,7 +84,6 @@ public class Sandwich implements OrderItem {
                 break;
             default:
                 break;
-
         }
     }
 
