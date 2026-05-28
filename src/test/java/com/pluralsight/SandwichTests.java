@@ -35,21 +35,21 @@ public class SandwichTests {
     public void testExtraMeatAddsOnTop() {
         Sandwich s = new Sandwich("white", false, 8);
         s.addTopping(new Topping("bacon", "meat", true));
-        assertEquals(10.00, s.getPrice()); // 7.00 + 2.00 + 1.00
+        assertEquals(10.00, s.getPrice());
     }
 
     @Test
     public void testCheeseTopping8Inch() {
         Sandwich s = new Sandwich("white", false, 8);
         s.addTopping(new Topping("cheddar", "cheese", false));
-        assertEquals(8.50, s.getPrice()); // 7.00 + 1.50
+        assertEquals(8.50, s.getPrice());
     }
 
     @Test
     public void testExtraCheeseAddsOnTop() {
         Sandwich s = new Sandwich("white", false, 8);
         s.addTopping(new Topping("cheddar", "cheese", true));
-        assertEquals(9.10, s.getPrice()); // 7.00 + 1.50 + 0.60
+        assertEquals(9.10, s.getPrice());
     }
 
     @Test
@@ -73,7 +73,6 @@ public class SandwichTests {
         Sandwich s = new Sandwich("white", false, 12);
         s.addTopping(new Topping("bacon", "meat", false));
         s.addTopping(new Topping("cheddar", "cheese", true));
-        // Base: 8.50 + meat(3.00) + cheese(2.25) + extra cheese(0.90) = 14.65
         assertEquals(14.65, s.getPrice(), 0.01);
     }
 
@@ -123,5 +122,30 @@ public class SandwichTests {
         assertEquals("wheat", s.getBreadType());
         assertEquals(12, s.getSize());
         assertTrue(s.isToasted());
+    }
+
+    @Test
+    public void testNullBreadTypeThrowsException() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            new Sandwich(null, false, 8);
+        });
+        assertTrue(exception.getMessage().contains("cannot be null"));
+    }
+
+    @Test
+    public void testInvalidSandwichSizeThrowsException() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            new Sandwich("white", false, 6);
+        });
+        assertTrue(exception.getMessage().contains("must be 4, 8, or 12"));
+    }
+
+    @Test
+    public void testNullToppingThrowsException() {
+        Sandwich s = new Sandwich("white", false, 8);
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            s.addTopping(null);
+        });
+        assertTrue(exception.getMessage().contains("cannot be null"));
     }
 }
