@@ -47,8 +47,6 @@ public class Receipt {
             writer.write(String.format("TOTAL: $%.2f%n",
                     order.getTotalPrice().doubleValue()));
             writer.newLine();
-            writer.write("Thank you for visiting BreadWinner!\uD83D\uDE9A\uD83D\uDCA8 ");
-            writer.newLine();
 
             System.out.println("\n========== YOUR RECEIPT ==========");
             for (OrderItem item : order.getItems()) {
@@ -57,7 +55,7 @@ public class Receipt {
             System.out.println("==================================");
             System.out.printf("TOTAL: $%.2f%n", order.getTotalPrice().doubleValue());
             System.out.println("==================================");
-            System.out.println("Thank you for visiting BreadWinner! 🚚💨");
+            System.out.print(Theme.getReceiptFooter());
 
         } catch (Exception e) {
             System.out.println("Error saving receipt: " + e.getMessage());
