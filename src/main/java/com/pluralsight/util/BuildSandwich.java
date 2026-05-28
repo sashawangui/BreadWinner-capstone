@@ -57,5 +57,36 @@ public class BuildSandwich {
         }
         return sandwich;
     }
+    private void addMeatTopping(Sandwich sandwich) {
+        String name = input.menuSelection(MEATS, "Select meat:");
+        boolean extra = input.yesOrNo("Extra portion? (yes/no): ");
+        sandwich.addTopping(new Topping(name, "meat", extra));
+        System.out.println(name + (extra ? " (extra)" : "") + " added!");    }
 
+    private void addCheeseTopping(Sandwich sandwich) {
+        String name = input.menuSelection(CHEESES, "Select cheese:");
+        boolean extra = input.yesOrNo("Extra portion? (yes/no): ");
+        sandwich.addTopping(new Topping(name, "cheese", extra));
+        System.out.println(name + " added!");
+    }
+
+    private void addVeggieTopping(Sandwich sandwich) {
+        String name = input.menuSelection(VEGGIES, "Select veggie:");
+        boolean extra = input.yesOrNo("Extra portion? (yes/no): ");
+        sandwich.addTopping(new Topping(name, "regular", extra));
+        System.out.println(name + (extra ? " (extra)" : "") + " added!");
+    }
+
+    private void addSideTopping(Sandwich sandwich) {
+        String[] categories = {"Sauce", "Au Jus"};
+        String category = input.menuSelection(categories, "Sauce or Side:");
+        if (category.equals("Sauce")) {
+            String sauce = input.menuSelection(SAUCES, "Select sauce:");
+            sandwich.addTopping(new Topping(sauce, "sauce", false));
+            System.out.println(sauce + " added!");
+        } else {
+            sandwich.addTopping(new Topping("au jus", "side", false));
+            System.out.println("Au jus added!");
+        }
+    }
 }
