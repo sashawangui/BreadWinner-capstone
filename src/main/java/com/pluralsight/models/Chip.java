@@ -5,6 +5,10 @@ public class Chip implements OrderItem{
     private double price;
 
     public Chip(String type) {
+        // dealing with empty spaces
+        if (type == null || type.trim().isEmpty()) {
+            throw new IllegalArgumentException ("Chip type cannot be null or empty");
+        }
         this.type = type;
 
         // price is pre-determined and immutable,
@@ -28,7 +32,7 @@ public class Chip implements OrderItem{
 
     @Override
     public String createReceipt() {
-        return String.format("CHIPS - %s - $%.2f", type, price);
+        return String.format("CHIPS - %s - $%.2f%n", type, price);
     }
 
 }

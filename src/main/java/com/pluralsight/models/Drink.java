@@ -34,6 +34,6 @@ public class Drink implements OrderItem {
 
     @Override
     public String createReceipt() {
-        return String.format("DRINK (%s) - %s - $%.2f", size, flavor, price);
+        return String.format("DRINK: %s (%s) $%.2f%n", flavor, size, price);
     }
 }
