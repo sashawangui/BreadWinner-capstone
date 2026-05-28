@@ -6,13 +6,19 @@ public class Drink implements OrderItem {
     private double price;
 
     public Drink(String flavor, String size) {
+        if (flavor == null || flavor.trim().isEmpty()) {
+            throw new IllegalArgumentException("Flavor cannot be null or empty");
+        }
+        if (size == null || size.trim().isEmpty()) {
+            throw new IllegalArgumentException("Size cannot be null or empty");
+        }
         this.flavor = flavor;
         this.size = size;
         this.price = calculateDrinkPrice(size);
     }
 
     private double calculateDrinkPrice(String size) {
-        return switch (size) {
+        return switch (size.toLowerCase()) {
             case "small" -> 2.00;
             case "medium" -> 2.50;
             case "large" -> 3.00;
@@ -20,7 +26,10 @@ public class Drink implements OrderItem {
         };
     }
 
-    public String getFlavor() {return flavor;}
+    public String getFlavor() {
+        return flavor;
+    }
+
     public void setFlavor(String flavor) {
         this.flavor = flavor;
     }
@@ -28,12 +37,13 @@ public class Drink implements OrderItem {
     public String getSize() {
         return size;
     }
-    public void setSize(String size) {this.size = size;}
 
-    public double getPrice() { return price;}
+    public double getPrice() {
+        return price;
+    }
 
     @Override
     public String createReceipt() {
-        return String.format("DRINK: %s (%s) $%.2f%n", flavor, size, price);
+        return String.format("DRINK - %s (%s) - $%.2f%n", flavor, size, price);
     }
 }
