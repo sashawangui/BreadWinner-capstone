@@ -51,7 +51,7 @@ public class Sandwich implements OrderItem {
         return price;
     }
 
-    //
+    //assign a base price per size
     private double basePrice(int size) {
         return switch (size) {
             case 4 -> 5.50;
@@ -61,6 +61,7 @@ public class Sandwich implements OrderItem {
         };
     }
 
+    //factor in topping prices
     public void addTopping(Topping topping) {
         toppings.add(topping);
         switch (topping.getType()) {
@@ -80,5 +81,19 @@ public class Sandwich implements OrderItem {
                 break;
 
         }
+    }
+
+    @Override
+    public String createReceipt() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(String.format("Sandwich: %d\" %s%s%n",
+                size, breadType, isToasted ? " (Toasted)" : ""));
+        for (Topping topping : toppings) {
+            sb.append(String.format("  - %s%s%n",
+                    topping.getName(),
+                    topping.isExtra() ? " (extra)" : ""));
+        }
+        sb.append(String.format("  Subtotal: $%.2f%n", price));
+        return sb.toString();
     }
 }

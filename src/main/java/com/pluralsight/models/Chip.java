@@ -25,4 +25,10 @@ public class Chip implements OrderItem{
     }
 
     //solid figure makes setter unnecessary
+
+    @Override
+    public String createReceipt() {
+        return String.format("CHIPS - %s - $%.2f", type, price);
+    }
+
 }
