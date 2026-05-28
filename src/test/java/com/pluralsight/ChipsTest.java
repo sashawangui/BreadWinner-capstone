@@ -19,4 +19,25 @@ public class ChipsTest {
         assertTrue(receipt.contains("Ranch"));
         assertTrue(receipt.contains("$1.50"));
     }
+
+    @Test
+    public void testMultipleChipFlavors() {
+        Chip bbq = new Chip("BBQ");
+        Chip plain = new Chip("Plain");
+        Chip saltVinegar = new Chip("Salt & Vinegar");
+
+        assertEquals("BBQ", bbq.getType());
+        assertEquals("Plain", plain.getType());
+        assertEquals("Salt & Vinegar", saltVinegar.getType());
+        assertEquals(1.50, bbq.getPrice());
+        assertEquals(1.50, plain.getPrice());
+        assertEquals(1.50, saltVinegar.getPrice());
+    }
+
+    @Test
+    public void testSetChipType() {
+        Chip c = new Chip("BBQ");
+        c.setType("Ranch");
+        assertEquals("Ranch", c.getType());
+    }
 }
