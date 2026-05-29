@@ -1,7 +1,5 @@
 package com.pluralsight.models;
 
-import com.pluralsight.util.Theme;
-
 import java.util.ArrayList;
 
 public class Sandwich implements OrderItem {
@@ -25,37 +23,14 @@ public class Sandwich implements OrderItem {
         this.price = basePrice(size);
     }
 
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public String getBreadType() {
-        return breadType;
-    }
-
-    public void setBreadType(String breadType) {
-        this.breadType = breadType;
-    }
-
-    public boolean isToasted() {
-        return isToasted;
-    }
-
-    public void setToasted(boolean toasted) {
-        isToasted = toasted;
-    }
-
-    public ArrayList<Topping> getToppings() {
-        return toppings;
-    }
-
-    public double getPrice() {
-        return price;
-    }
+    public int getSize() { return size; }
+    public void setSize(int size) { this.size = size; }
+    public String getBreadType() { return breadType; }
+    public void setBreadType(String breadType) { this.breadType = breadType; }
+    public boolean isToasted() { return isToasted; }
+    public void setToasted(boolean toasted) { isToasted = toasted; }
+    public ArrayList<Topping> getToppings() { return toppings; }
+    public double getPrice() { return price; }
 
     private double basePrice(int size) {
         return switch (size) {
@@ -92,9 +67,8 @@ public class Sandwich implements OrderItem {
     @Override
     public String createReceipt() {
         StringBuilder sb = new StringBuilder();
-        sb.append(String.format("%sSandwich: %d\" %s%s%s%s\n",
-                Theme.BREAD_BROWN, size, breadType, isToasted ? " (Toasted)" : "", Theme.RESET,
-                isToasted ? Theme.FIRE : ""));
+        sb.append(String.format("Sandwich: %d\" %s%s%n",
+                size, breadType, isToasted ? " (Toasted)" : ""));
         for (Topping topping : toppings) {
             sb.append(String.format("  - %s%s%n",
                     topping.getName(),

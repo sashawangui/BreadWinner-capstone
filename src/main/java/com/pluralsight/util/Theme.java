@@ -17,6 +17,19 @@ public class Theme {
     public static final String WATER_SPLASH = "\uD83D\uDCA6";
     public static final String FIRE = "\uD83D\uDD25";
 
+    public static void printSplash() {
+        System.out.println(DUCK_YELLOW +
+                "  ____                   _  __          _\n" +
+                " | __ ) _ __ ___  __ _  | |/ /_      __(_)_ __  _ __   ___ _ __\n" +
+                " |  _ \\| '__/ _ \\/ _` | | ' /\\ \\ /\\ / /| | '_ \\| '_ \\ / _ \\ '__|\n" +
+                " | |_) | | |  __/ (_| | | . \\ \\ V  V / | | | | | | | |  __/ |\n" +
+                " |____/|_|  \\___|\\__,_| |_|\\_\\ \\_/\\_/  |_|_| |_|_| |_|\\___|_|\n"
+                + RESET);
+        System.out.println(SKY_BLUE +
+                "        " + DUCK_FACE + " Fresh Sandwiches, Soggy Bottom Approved! " + BREAD_LOAF
+                + RESET);
+        System.out.println();
+    }
 
     public static void printBanner(String title) {
         String visibleContent = "  " + DUCK_FACE + " " + BREAD_LOAF + " " + title + " " + BREAD_LOAF + " " + DUCK_FACE + "  ";
@@ -38,13 +51,11 @@ public class Theme {
         System.out.println(borderBottom);
     }
 
-    //  border
     public static void printBorder() {
         System.out.printf("%s%s═════════════════════════════════════════%s\n",
                 WATER_GREEN, DUCK_YELLOW, RESET);
     }
 
-    //  footer
     public static String getReceiptFooter() {
         return String.format("\n%s%s%s %sSoggy Bottom Boys Approved! %s%s%s\n",
                 DUCK_FACE, BREAD_LOAF, FLYER, WATER_GREEN, DUCK_FACE, BREAD_LOAF, RESET);

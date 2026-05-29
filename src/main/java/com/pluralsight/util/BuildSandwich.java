@@ -38,10 +38,10 @@ public class BuildSandwich {
         boolean addingToppings = true;
         while (addingToppings) {
             System.out.println("\n--- Add Toppings ---");
-            System.out.println("1. Meat " + Theme.FIRE);
-            System.out.println("2. Cheese");
-            System.out.println("3. Veggies");
-            System.out.println("4. Sauce / Side");
+            System.out.println(Theme.FLYER_RED + "1. Meat " + Theme.FIRE + Theme.RESET);
+            System.out.println(Theme.DUCK_YELLOW + "2. Cheese" + Theme.RESET);
+            System.out.println(Theme.WATER_GREEN + "3. Veggies" + Theme.RESET);
+            System.out.println(Theme.SKY_BLUE + "4. Sauce / Side" + Theme.RESET);
             System.out.println("0. Done");
 
             int choice = input.getValidInt("Choice: ");
@@ -61,21 +61,21 @@ public class BuildSandwich {
         String name = input.menuSelection(MEATS, "Select meat:");
         boolean extra = input.yesOrNo("Extra portion? (yes/no): ");
         sandwich.addTopping(new Topping(name, "meat", extra));
-        System.out.println(name + (extra ? " (extra)" : "") + " added!");
+        System.out.println(Theme.FLYER_RED + name + (extra ? " (extra)" : "") + " added!" + Theme.RESET);
     }
 
     private void addCheeseTopping(Sandwich sandwich) {
         String name = input.menuSelection(CHEESES, "Select cheese:");
         boolean extra = input.yesOrNo("Extra portion? (yes/no): ");
         sandwich.addTopping(new Topping(name, "cheese", extra));
-        System.out.println(name + (extra ? " (extra)" : "") + " added!");
+        System.out.println(Theme.DUCK_YELLOW + name + (extra ? " (extra)" : "") + " added!" + Theme.RESET);
     }
 
     private void addVeggieTopping(Sandwich sandwich) {
         String name = input.menuSelection(VEGGIES, "Select veggie:");
         boolean extra = input.yesOrNo("Extra portion? (yes/no): ");
         sandwich.addTopping(new Topping(name, "regular", extra));
-        System.out.println(name + (extra ? " (extra)" : "") + " added!");
+        System.out.println(Theme.WATER_GREEN + name + (extra ? " (extra)" : "") + " added!" + Theme.RESET);
     }
 
     private void addSideTopping(Sandwich sandwich) {
@@ -84,10 +84,10 @@ public class BuildSandwich {
         if (category.equals("Sauce")) {
             String sauce = input.menuSelection(SAUCES, "Select sauce:");
             sandwich.addTopping(new Topping(sauce, "sauce", false));
-            System.out.println(sauce + " added!");
+            System.out.println(Theme.SKY_BLUE + sauce + " added!" + Theme.RESET);
         } else {
             sandwich.addTopping(new Topping("au jus", "side", false));
-            System.out.println("Au jus added!");
+            System.out.println(Theme.SKY_BLUE + "Au jus added!" + Theme.RESET);
         }
     }
 }
