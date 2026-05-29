@@ -4,6 +4,7 @@ import com.pluralsight.models.*;
 import com.pluralsight.util.BuildSandwich;
 import com.pluralsight.util.InputValidator;
 import com.pluralsight.util.Receipt;
+import com.pluralsight.util.Theme;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -19,12 +20,10 @@ public class UserInterface {
     public void start() {
         boolean running = true;
         while (running) {
-            System.out.println("\n=================================");
-            System.out.println("     BREADWINNER SANDWICHES");
-            System.out.println("=================================");
+            Theme.printBanner("BREADWINNER");
             System.out.println("1. Create New Order");
             System.out.println("0. Exit");
-            System.out.println("=================================");
+            Theme.printBorder();
             System.out.print("Enter your choice: ");
 
             try {
@@ -32,7 +31,7 @@ public class UserInterface {
                 switch (choice) {
                     case 1 -> createOrder();
                     case 0 -> {
-                        System.out.println("Goodbye! 🥪");
+                        System.out.println(Theme.DUCK_FACE + " Goodbye! " + Theme.BREAD_LOAF);
                         running = false;
                     }
                     default -> System.out.println("Invalid option, try again.");
@@ -48,16 +47,14 @@ public class UserInterface {
         boolean addingItems = true;
 
         while (addingItems) {
-            System.out.println("\n=================================");
-            System.out.println("         BREADWINNER");
-            System.out.println("=================================");
-            System.out.println("1. Add Sandwich");
-            System.out.println("2. Add Drink");
+            Theme.printBanner("ORDER MENU");
+            System.out.println("1. Add Sandwich " + Theme.BREAD_LOAF);
+            System.out.println("2. Add Drink " + Theme.WATER_SPLASH);
             System.out.println("3. Add Chips");
-            System.out.println("4. Checkout");
+            System.out.println("4. Checkout " + Theme.DELIVERY_VAN);
             System.out.println("5. Remove Item");
-            System.out.println("0. Cancel Order");
-            System.out.println("=================================");
+            System.out.println("0. Cancel Order " + Theme.FLYER);
+            Theme.printBorder();
             System.out.print("Enter your choice: ");
 
             try {
@@ -101,7 +98,7 @@ public class UserInterface {
         String size = input.menuSelection(sizes, "Select size:");
         Drink drink = new Drink(flavor, size);
         currentOrder.addItem(drink);
-        System.out.printf("%s (%s) added - $%.2f%n", flavor, size, drink.getPrice());
+        System.out.printf(Theme.WATER_SPLASH + " %s (%s) added - $%.2f%n", flavor, size, drink.getPrice());
     }
 
     private void addChips() {
@@ -128,7 +125,6 @@ public class UserInterface {
         if (choice == 0) return;
 
         if (choice >= 1 && choice <= items.size()) {
-            OrderItem removed = items.get(choice - 1);
             currentOrder.removeItem(choice - 1);
             System.out.println("Removed from order!");
         } else {
@@ -140,7 +136,7 @@ public class UserInterface {
         displayOrder();
         if (input.yesOrNo("Confirm order? (yes/no): ")) {
             receipt.saveReceipt(currentOrder);
-            System.out.println("Thank you for your order! \uD83E\uDD6A");
+            System.out.println(Theme.DUCK_FACE + " Thank you for your order! " + Theme.BREAD_LOAF);
         } else {
             System.out.println("Order cancelled.");
             currentOrder = null;
