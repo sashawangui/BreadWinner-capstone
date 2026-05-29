@@ -1,10 +1,7 @@
 package com.pluralsight.ui;
 
 import com.pluralsight.models.*;
-import com.pluralsight.util.BuildSandwich;
-import com.pluralsight.util.InputValidator;
-import com.pluralsight.util.Receipt;
-import com.pluralsight.util.Theme;
+import com.pluralsight.util.*;
 
 import java.util.Scanner;
 
@@ -64,17 +61,16 @@ public class UserInterface {
                     case 2 -> addDrink();
                     case 3 -> addChips();
                     case 4 -> {
-                        if (!currentOrder.getItems().isEmpty()) {
-                            boolean confirmed = confirmationHandler.confirmOrder(currentOrder);
-                            if (confirmed) {
-                                currentOrder = null;
-                                addingItems = false;
-                            }
-                            if (currentOrder == null || currentOrder.getItems().isEmpty()) {
-                                addingItems = false;
-                            }
-                        } else {
-                            System.out.println("Your order is empty!");
+                        OrderConfirmationHandler handler = new OrderConfirmationHandler(input, new Receipt());
+                        int result = handler.confirmOrder(currentOrder);
+
+                        if (result == OrderConfirmationHandler.CONFIRMED) {
+                            addingItems = false;
+                        } else if (result == OrderConfirmationHandler.CANCELLED) {
+                            System.out.println("Order cancelled. Starting fresh.");
+                            currentOrder = new Order();
+                        } else if (result == OrderConfirmationHandler.EDIT_REQUESTED) {
+                            System.out.println("Returning to menu to add more items.");
                         }
                     }
                     case 5 -> confirmationHandler.removeItem(currentOrder);

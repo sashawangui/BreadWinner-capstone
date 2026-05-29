@@ -57,7 +57,7 @@ public class Theme {
     }
 
     public static String getReceiptFooter() {
-        return String.format("\n%s%s%s %sSoggy Bottom Boys Approved! %s%s%s\n",
-                DUCK_FACE, BREAD_LOAF, FLYER, WATER_GREEN, DUCK_FACE, BREAD_LOAF, RESET);
+        return String.format("\n%s%s %sSoggy Bottom Boys Approved! %s%s\n",
+                DUCK_FACE, BREAD_LOAF, WATER_GREEN, DUCK_FACE, BREAD_LOAF, RESET);
     }
 }

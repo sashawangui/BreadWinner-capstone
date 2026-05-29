@@ -9,6 +9,10 @@ import com.pluralsight.util.Theme;
 import java.util.ArrayList;
 
 public class OrderConfirmationHandler {
+    public static final int CONFIRMED = 0;
+    public static final int CANCELLED = 1;
+    public static final int EDIT_REQUESTED = 2;
+
     private final InputValidator input;
     private final Receipt receipt;
 
@@ -17,11 +21,13 @@ public class OrderConfirmationHandler {
         this.receipt = receipt;
     }
 
-    // Runs the confirmation/edit/cancel flow for an order.
-     // true if order was confirmed and placed, false if canceled.
-
-    public boolean confirmOrder(Order order) {
+    public int confirmOrder(Order order) {
         while (true) {
+            if (order.getItems().isEmpty()) {
+                System.out.println(Theme.FLYER_RED + "Your order is empty. Please add items first." + Theme.RESET);
+                return EDIT_REQUESTED;
+            }
+
             displayOrder(order);
             System.out.println("\n--- Confirm Order ---");
             System.out.println("1. Yes, place order");
@@ -33,12 +39,17 @@ public class OrderConfirmationHandler {
                 case 1 -> {
                     receipt.saveReceipt(order);
                     System.out.println(Theme.DUCK_FACE + " Thank you for your order! " + Theme.BREAD_LOAF);
-                    return true; // confirmed
+                    return CONFIRMED;
                 }
-                case 2 -> editOrder(order);
+                case 2 -> {
+                    boolean wantMoreItems = editOrder(order);
+                    if (wantMoreItems) {
+                        return EDIT_REQUESTED;
+                    }
+                }
                 case 3 -> {
                     if (cancelOrder(order)) {
-                        return false; // cancelled
+                        return CANCELLED;
                     }
                 }
                 default -> System.out.println("Invalid choice, try again.");
@@ -46,7 +57,7 @@ public class OrderConfirmationHandler {
         }
     }
 
-    private void displayOrder(Order order) {
+    public void displayOrder(Order order) {
         System.out.println("\n========== YOUR ORDER ==========");
         for (OrderItem item : order.getItems()) {
             System.out.print(item.createReceipt());
@@ -56,23 +67,32 @@ public class OrderConfirmationHandler {
         System.out.println("================================");
     }
 
-    private void editOrder(Order order) {
+
+    public boolean editOrder(Order order) {
         System.out.println("\n--- Edit Order ---");
         System.out.println("1. Add more items");
         System.out.println("2. Remove an item");
         System.out.println("3. Clear entire order and start over");
+        System.out.println("0. Return to confirmation (no changes)");
         int choice = input.getValidInt("What would you like to do? ");
 
         switch (choice) {
-            case 1 -> System.out.println("Returning to order menu. Add items or checkout when ready.");
-            case 2 -> removeItem(order);
+            case 1 -> {
+                return true;
+            }
+            case 2 -> {
+                removeItem(order);
+                return false;
+            }
             case 3 -> {
                 order.clear();
-                System.out.println("Order cleared. Returning to order menu.");
+                System.out.println("Order cleared.");
+                return false;
             }
-            default -> System.out.println("Invalid choice, returning to order menu.");
+            default -> {
+                return false;
+            }
         }
-        // After edit, we just return – confirmation loop will re-show order.
     }
 
     public void removeItem(Order order) {
@@ -98,7 +118,7 @@ public class OrderConfirmationHandler {
         }
     }
 
-    private boolean cancelOrder(Order order) {
+    public boolean cancelOrder(Order order) {
         System.out.println("\n--- Cancel Order ---");
         System.out.println("1. Yes, cancel entire order");
         System.out.println("2. No, go back");
@@ -107,9 +127,8 @@ public class OrderConfirmationHandler {
         if (choice == 1) {
             order.clear();
             System.out.println("Order cancelled.");
-            return true; // cancelled
-        } else {
-            return false; // go back to confirmation
+            return true;
         }
+        return false;
     }
 }

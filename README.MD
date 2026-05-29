@@ -25,6 +25,7 @@ A Java console-based point-of-sale application where customers can build fully c
 
 ---
 
+
 ## 🦆 Inspiration
 
 The name **BreadWinner** comes from the Nickelodeon animated show *Breadwinners*, where two ducks named SwaySway and Buhdeuce deliver bread across the fictional land of Pondgea in a rocket-powered van. The show's chaotic energy, love of bread, and duck-themed everything felt like the perfect vibe for a sandwich shop application.
