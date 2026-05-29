@@ -93,20 +93,22 @@ public class UserInterface {
 
     private void addDrink() {
         System.out.println("\n--- Add Drink ---");
-        String flavor = input.getValidString("Enter flavor (Coke, Sprite, etc.): ");
+        String flavor = input.menuSelection(Drink.FLAVORS, "Select drink:");
         String[] sizes = {"small", "medium", "large"};
         String size = input.menuSelection(sizes, "Select size:");
         Drink drink = new Drink(flavor, size);
         currentOrder.addItem(drink);
-        System.out.printf(Theme.WATER_SPLASH + " %s (%s) added - $%.2f%n", flavor, size, drink.getPrice());
+        System.out.printf(Theme.WATER_SPLASH + " %s (%s) added - $%.2f%n",
+                flavor, size, drink.getPrice());
     }
 
     private void addChips() {
         System.out.println("\n--- Add Chips ---");
-        String flavor = input.getValidString("Enter chip flavor (BBQ, Plain, etc.): ");
+        String flavor = input.menuSelection(Chip.FLAVORS, "Select chips:");
         Chip chips = new Chip(flavor);
         currentOrder.addItem(chips);
-        System.out.printf("%s chips added - $%.2f%n", flavor, chips.getPrice());
+        System.out.printf(Theme.DUCK_YELLOW + "%s chips added - $%.2f" + Theme.RESET + "%n",
+                flavor, chips.getPrice());
     }
 
     private void removeItem() {

@@ -4,6 +4,10 @@ public class Drink implements OrderItem {
     private String flavor;
     private String size;
     private double price;
+    public static final String[] FLAVORS = {
+            "Coke", "Diet Coke", "Sprite", "Lemonade",
+            "Orange Juice", "Water", "Iced Tea", "Root Beer"
+    };
 
     public Drink(String flavor, String size) {
         if (flavor == null || flavor.trim().isEmpty()) {

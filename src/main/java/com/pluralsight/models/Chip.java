@@ -3,6 +3,10 @@ package com.pluralsight.models;
 public class Chip implements OrderItem{
     private String type;
     private double price;
+    public static final String[] FLAVORS = {
+            "BBQ", "Plain", "Salt & Vinegar", "Sour Cream & Onion",
+            "Cheddar", "Spicy Jalapeño"
+    };
 
     public Chip(String type) {
         if (type == null || type.trim().isEmpty()) {

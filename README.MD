@@ -237,7 +237,7 @@ Thank you for visiting BreadWinner! 🦆🍞
 - Quantity tracking — group duplicate items on receipt
 - Topping removal from individual sandwiches
 - Online ordering support
-
+- Editing the order post confirmation, instead of cancelling the whole order
 ---
 
 ## 🛠️ Technologies
