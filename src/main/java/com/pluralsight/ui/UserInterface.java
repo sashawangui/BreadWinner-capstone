@@ -6,7 +6,6 @@ import com.pluralsight.util.InputValidator;
 import com.pluralsight.util.Receipt;
 import com.pluralsight.util.Theme;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -44,6 +43,7 @@ public class UserInterface {
 
     public void createOrder() {
         currentOrder = new Order();
+        OrderConfirmationHandler confirmationHandler = new OrderConfirmationHandler(input, receipt);
         boolean addingItems = true;
 
         while (addingItems) {
@@ -65,15 +65,21 @@ public class UserInterface {
                     case 3 -> addChips();
                     case 4 -> {
                         if (!currentOrder.getItems().isEmpty()) {
-                            checkout();
-                            addingItems = false;
+                            boolean confirmed = confirmationHandler.confirmOrder(currentOrder);
+                            if (confirmed) {
+                                currentOrder = null;
+                                addingItems = false;
+                            }
+                            if (currentOrder == null || currentOrder.getItems().isEmpty()) {
+                                addingItems = false;
+                            }
                         } else {
                             System.out.println("Your order is empty!");
                         }
                     }
-                    case 5 -> removeItem();
+                    case 5 -> confirmationHandler.removeItem(currentOrder);
                     case 0 -> {
-                        System.out.println("Order cancelled.");
+                        System.out.println("Order canceled.");
                         currentOrder = null;
                         addingItems = false;
                     }
@@ -109,50 +115,5 @@ public class UserInterface {
         currentOrder.addItem(chips);
         System.out.printf(Theme.DUCK_YELLOW + "%s chips added - $%.2f" + Theme.RESET + "%n",
                 flavor, chips.getPrice());
-    }
-
-    private void removeItem() {
-        if (currentOrder.getItems().isEmpty()) {
-            System.out.println("Your order is empty!");
-            return;
-        }
-
-        System.out.println("\n--- Remove Item ---");
-        ArrayList<OrderItem> items = currentOrder.getItems();
-        for (int i = 0; i < items.size(); i++) {
-            System.out.printf("%d. %s", i + 1, items.get(i).createReceipt());
-        }
-
-        int choice = input.getValidInt("Enter item number to remove (0 to cancel): ");
-        if (choice == 0) return;
-
-        if (choice >= 1 && choice <= items.size()) {
-            currentOrder.removeItem(choice - 1);
-            System.out.println("Removed from order!");
-        } else {
-            System.out.println("Invalid selection.");
-        }
-    }
-
-    private void checkout() {
-        displayOrder();
-        if (input.yesOrNo("Confirm order? (yes/no): ")) {
-            receipt.saveReceipt(currentOrder);
-            System.out.println(Theme.DUCK_FACE + " Thank you for your order! " + Theme.BREAD_LOAF);
-        } else {
-            System.out.println("Order cancelled.");
-            currentOrder = null;
-        }
-    }
-
-    private void displayOrder() {
-        System.out.println("\n========== YOUR ORDER ==========");
-        for (OrderItem item : currentOrder.getItems()) {
-            System.out.print(item.createReceipt());
-        }
-        System.out.println("================================");
-        System.out.printf("TOTAL: $%.2f%n",
-                currentOrder.getTotalPrice().doubleValue());
-        System.out.println("================================");
     }
 }

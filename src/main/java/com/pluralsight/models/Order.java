@@ -25,4 +25,8 @@ public class Order {
             items.remove(index);
         }
     }
+
+    public void clear() {
+        items.clear();
+    }
 }
