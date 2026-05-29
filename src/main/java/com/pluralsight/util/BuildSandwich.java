@@ -16,7 +16,6 @@ public class BuildSandwich {
                     "thousand islands", "vinaigrette"};
     private static final String[] BREADS =
             {"white", "wheat", "rye", "wrap"};
-    private static final String[] SIZES = {"4", "8", "12"};
 
     private InputValidator input;
 
@@ -39,7 +38,7 @@ public class BuildSandwich {
         boolean addingToppings = true;
         while (addingToppings) {
             System.out.println("\n--- Add Toppings ---");
-            System.out.println("1. Meat");
+            System.out.println("1. Meat " + Theme.FIRE);
             System.out.println("2. Cheese");
             System.out.println("3. Veggies");
             System.out.println("4. Sauce / Side");
@@ -57,17 +56,19 @@ public class BuildSandwich {
         }
         return sandwich;
     }
+
     private void addMeatTopping(Sandwich sandwich) {
         String name = input.menuSelection(MEATS, "Select meat:");
         boolean extra = input.yesOrNo("Extra portion? (yes/no): ");
         sandwich.addTopping(new Topping(name, "meat", extra));
-        System.out.println(name + (extra ? " (extra)" : "") + " added!");    }
+        System.out.println(name + (extra ? " (extra)" : "") + " added!");
+    }
 
     private void addCheeseTopping(Sandwich sandwich) {
         String name = input.menuSelection(CHEESES, "Select cheese:");
         boolean extra = input.yesOrNo("Extra portion? (yes/no): ");
         sandwich.addTopping(new Topping(name, "cheese", extra));
-        System.out.println(name + " added!");
+        System.out.println(name + (extra ? " (extra)" : "") + " added!");
     }
 
     private void addVeggieTopping(Sandwich sandwich) {
